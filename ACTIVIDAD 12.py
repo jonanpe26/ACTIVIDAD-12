@@ -9,9 +9,9 @@ def quick_sort(lista):
         return quick_sort(mayores)+ [pivote] + quick_sort(iguales + menores)
 
 repartidores={}
-n = input("ingrese el numero de repartidores")
+n = int(input("ingrese el numero de repartidores"))
 
-for in range(n):
+for _ in range(n):
     while True:
         nombre=input("nombre del repartidor")
         if nombre in repartidores:
@@ -37,3 +37,36 @@ for in range(n):
         else:
             break
     repartidores[nombre] = {"paquetes": paquetes, "zona": zona}
+print("repartidores")
+ordenados = quick_sort(list(repartidores.items()))
+for nombre, datos in ordenados:
+    print(f"{nombre}-{datos["paquetes"]}paquetes -Zona: {datos["zona"]}")
+
+buscar=input("buscar repartidor")
+encontrado=False
+for nombre in repartidores:
+    if nombre == buscar:
+        print(f"{nombre} entrego {repartidores[nombre]["paquetes"]} paquetes en la zona {repartidores[nombre]["zona"]}")
+        encontrado=True
+        break
+if not encontrado:
+    print("repartidor no encontrando")
+
+total = sum(informacion["paquetes"]for informacion in repartidores.values())
+promedio = total/len(repartidores)
+
+maximo=max(informacion["paquetes"]for informacion in repartidores.values())
+minimo=min(informacion["paquetes"]for informacion in repartidores.values())
+
+print(f"total de paquetes entregados{total}")
+print(f"promedio de entregas{promedio}")
+print("mayor numero de entregas")
+for nombre, informacion in repartidores.items():
+    if informacion["paquetes"]==maximo:
+        print(f"{nombre}({informacion["paquetes"]})")
+
+print("menor numero de entregas")
+for nombre, informacion in repartidores.items():
+    if informacion["paquetes"]==minimo:
+        print(f"{nombre}({informacion["paquetes"]})")
+
